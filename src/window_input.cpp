@@ -6,21 +6,21 @@
 #include "global.h"
 #include "init.h"
 
-void handle_input(bool& done) {
+void handle_input() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         ImGui_ImplSDL3_ProcessEvent(&event);
         switch (event.type) {
             case SDL_EVENT_KEY_DOWN:
                 if (event.key.key == SDLK_ESCAPE) {
-                    done = true;
+                    context.done = true;
                 }
             case SDL_EVENT_QUIT:
-                done = true;
+                context.done = true;
                 break;
             case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
                 if (event.window.windowID == SDL_GetWindowID(context.window)) {
-                    done = true;
+                    context.done = true;
                 }
         }
     }
