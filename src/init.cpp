@@ -14,9 +14,9 @@ void init(int window_width, int window_height) {
         exit(1);
     }
 
-    context->window = SDL_CreateWindow("Click", window_width, window_height, SDL_WINDOW_OPENGL);
+    context.window = SDL_CreateWindow("Click", window_width, window_height, SDL_WINDOW_OPENGL);
 
-    if (!context->window) {
+    if (!context.window) {
         printf("Failed to open %d x %d window: %s\n", window_width, window_height, SDL_GetError());
         exit(1);
     }
@@ -52,27 +52,27 @@ void init(int window_width, int window_height) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 #endif
 
-    context->gl_context = SDL_GL_CreateContext(context->window);
-    if (context->gl_context == nullptr) {
+    context.gl_context = SDL_GL_CreateContext(context.window);
+    if (context.gl_context == nullptr) {
         printf("Error: SDL_GL_CreateContext(): %s\n", SDL_GetError());
         exit(-1);
     }
 
-    SDL_GL_MakeCurrent(context->window, context->gl_context);
+    SDL_GL_MakeCurrent(context.window, context.gl_context);
     SDL_GL_SetSwapInterval(1);  // Enable vsync
-    SDL_ShowWindow(context->window);
+    SDL_ShowWindow(context.window);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    context->io = &ImGui::GetIO();
-    (void)context->io;
-    context->io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+    context.io = &ImGui::GetIO();
+    (void)context.io;
+    context.io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
 
     // Setup Platform/Renderer backends
-    ImGui_ImplSDL3_InitForOpenGL(context->window, context->gl_context);
+    ImGui_ImplSDL3_InitForOpenGL(context.window, context.gl_context);
     ImGui_ImplOpenGL3_Init(glsl_version);
 }

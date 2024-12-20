@@ -12,7 +12,7 @@ struct Click {
     bool should_click = false;
 };
 
-inline Click* click = new Click;
+inline Click click = {false};
 
 struct AppContext {
     SDL_Window* window = NULL;
@@ -22,4 +22,4 @@ struct AppContext {
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 };
 
-inline AppContext* context = new AppContext;
+inline AppContext context = {0};

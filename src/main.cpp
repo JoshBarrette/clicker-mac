@@ -23,12 +23,12 @@ CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef eve
 
     switch (type) {
         case kCGEventLeftMouseUp:
-            // cout << "Mouse up: " << sourceState << endl;
-            // click->should_click = false;
+            cout << "Mouse up: " << sourceState << endl;
+            // click.should_click = false;
             break;
         case kCGEventLeftMouseDown:
             cout << "Mouse down: " << sourceState << endl;
-            // click->should_click = !click->should_click;
+            // click.should_click = !click.should_click;
             break;
         default:
             break;
@@ -68,7 +68,7 @@ int main() {
         handle_input(done);
 
         // Wait if minimized and start the Dear ImGui frame
-        if (SDL_GetWindowFlags(context->window) & SDL_WINDOW_MINIMIZED) {
+        if (SDL_GetWindowFlags(context.window) & SDL_WINDOW_MINIMIZED) {
             SDL_Delay(10);
             continue;
         }
@@ -76,7 +76,7 @@ int main() {
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
-        if (click->should_click) {
+        if (click.should_click) {
             left_click();
         }
 
@@ -84,10 +84,10 @@ int main() {
 
         // Rendering
         ImGui::Render();
-        glViewport(0, 0, (int)context->io->DisplaySize.x, (int)context->io->DisplaySize.y);
+        glViewport(0, 0, (int)context.io->DisplaySize.x, (int)context.io->DisplaySize.y);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        SDL_GL_SwapWindow(context->window);
+        SDL_GL_SwapWindow(context.window);
     }
 
     // Cleanup
@@ -95,7 +95,7 @@ int main() {
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
 
-    SDL_GL_DestroyContext(context->gl_context);
-    SDL_DestroyWindow(context->window);
+    SDL_GL_DestroyContext(context.gl_context);
+    SDL_DestroyWindow(context.window);
     SDL_Quit();
 }

@@ -19,7 +19,7 @@ void handle_input(bool& done) {
                 done = true;
                 break;
             case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
-                if (event.window.windowID == SDL_GetWindowID(context->window)) {
+                if (event.window.windowID == SDL_GetWindowID(context.window)) {
                     done = true;
                 }
         }
