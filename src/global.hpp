@@ -23,9 +23,9 @@ struct AppContext {
     bool* done = new bool(false);
     bool* should_click = new bool(false);
 
-    SDL_Window* window = NULL;
-    ImGuiIO* io = NULL;
-    SDL_GLContext gl_context = NULL;
+    SDL_Window* window = nullptr;
+    ImGuiIO* io = nullptr;
+    SDL_GLContext gl_context = nullptr;
 
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 };

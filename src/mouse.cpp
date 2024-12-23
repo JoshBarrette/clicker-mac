@@ -13,16 +13,16 @@ void left_click() {
 
     cout << "Clicking..." << endl;
 
-    CGEventRef ourEvent = CGEventCreate(NULL);
+    CGEventRef ourEvent = CGEventCreate(nullptr);
     CGPoint point = CGEventGetLocation(ourEvent);
     CFRelease(ourEvent);
 
     CGEventRef click_down = CGEventCreateMouseEvent(
-        NULL, kCGEventLeftMouseDown,
+        nullptr, kCGEventLeftMouseDown,
         point,
         kCGMouseButtonLeft);
     CGEventRef click_up = CGEventCreateMouseEvent(
-        NULL, kCGEventLeftMouseUp,
+        nullptr, kCGEventLeftMouseUp,
         point,
         kCGMouseButtonLeft);
 
