@@ -13,14 +13,14 @@ void handle_input() {
         switch (event.type) {
             case SDL_EVENT_KEY_DOWN:
                 if (event.key.key == SDLK_ESCAPE) {
-                    context.done = true;
+                    *(context.done) = true;
                 }
             case SDL_EVENT_QUIT:
-                context.done = true;
+                *(context.done) = true;
                 break;
             case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
                 if (event.window.windowID == SDL_GetWindowID(context.window)) {
-                    context.done = true;
+                    *(context.done) = true;
                 }
         }
     }

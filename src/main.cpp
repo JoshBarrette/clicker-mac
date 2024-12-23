@@ -22,7 +22,7 @@ int main() {
     start_click_reading();
     std::thread click_thread(start_click_thread);
 
-    while (!context.done) {
+    while (!*(context.done)) {
         handle_input();
 
         // Wait if minimized and start the Dear ImGui frame
@@ -35,6 +35,19 @@ int main() {
         ImGui::NewFrame();
 
         example_window();
+
+        // Main Window
+        {
+            ImGui::Begin("Main Window");
+            ImGui::Checkbox("Click", context.click_checked);
+
+            if (*(context.click_checked)) {
+                ImGui::SameLine();
+                ImGui::Text("enabled");
+            }
+
+            ImGui::End();
+        }
 
         // Rendering
         ImGui::Render();
@@ -49,6 +62,7 @@ int main() {
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
 
+    *(context.done) = true;
     click_thread.join();
 
     SDL_GL_DestroyContext(context.gl_context);
