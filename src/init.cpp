@@ -8,16 +8,18 @@
 
 #include "global.hpp"
 
-void init(int window_width, int window_height) {
+void init_fonts();
+
+void init() {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         printf("Couldn't initialize SDL: %s\n", SDL_GetError());
         exit(1);
     }
 
-    context.window = SDL_CreateWindow("Click", window_width, window_height, SDL_WINDOW_OPENGL);
+    context.window = SDL_CreateWindow("Click", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
 
     if (!context.window) {
-        printf("Failed to open %d x %d window: %s\n", window_width, window_height, SDL_GetError());
+        printf("Failed to open %d x %d window: %s\n", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_GetError());
         exit(1);
     }
 
@@ -66,7 +68,6 @@ void init(int window_width, int window_height) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     context.io = &ImGui::GetIO();
-    (void)context.io;
     context.io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 
     // Setup Dear ImGui style
@@ -75,4 +76,11 @@ void init(int window_width, int window_height) {
     // Setup Platform/Renderer backends
     ImGui_ImplSDL3_InitForOpenGL(context.window, context.gl_context);
     ImGui_ImplOpenGL3_Init(glsl_version);
+
+    init_fonts();
+}
+
+void init_fonts() {
+    fonts.impact_title = context.io->Fonts->AddFontFromFileTTF("fonts/Impact.ttf", 30.0f);
+    fonts.default_font = context.io->Fonts->AddFontDefault();
 }

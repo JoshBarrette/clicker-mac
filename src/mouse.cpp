@@ -11,8 +11,6 @@
 void left_click() {
     using namespace std;
 
-    // if (!*(context.click_checked)) return;
-
     cout << "Clicking..." << endl;
 
     CGEventRef ourEvent = CGEventCreate(NULL);
@@ -44,11 +42,11 @@ CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef eve
 
     switch (type) {
         case kCGEventLeftMouseUp:
-            cout << "Mouse up: " << sourceState << endl;
+            // cout << "Mouse up: " << sourceState << endl;
             *(context.should_click) = false;
             break;
         case kCGEventLeftMouseDown:
-            cout << "Mouse down: " << sourceState << endl;
+            // cout << "Mouse down: " << sourceState << endl;
             *(context.should_click) = true;
             break;
         default:

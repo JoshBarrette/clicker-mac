@@ -14,10 +14,11 @@
 #include "init.hpp"
 #include "mouse.hpp"
 #include "structs.hpp"
+#include "ui_windows.hpp"
 #include "window_input.hpp"
 
 int main() {
-    init(WINDOW_WIDTH, WINDOW_HEIGHT);
+    init();
 
     start_click_reading();
     std::thread click_thread(start_click_thread);
@@ -34,20 +35,7 @@ int main() {
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
 
-        example_window();
-
-        // Main Window
-        {
-            ImGui::Begin("Main Window");
-            ImGui::Checkbox("Click", context.click_checked);
-
-            if (*(context.click_checked)) {
-                ImGui::SameLine();
-                ImGui::Text("enabled");
-            }
-
-            ImGui::End();
-        }
+        main_window();
 
         // Rendering
         ImGui::Render();

@@ -29,5 +29,10 @@ struct AppContext {
 
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 };
-
 inline AppContext context = {};
+
+struct Fonts {
+    ImFont* impact_title = nullptr;
+    ImFont* default_font = nullptr;
+};
+inline Fonts fonts = {};
