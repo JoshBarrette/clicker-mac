@@ -1,4 +1,4 @@
-#include "init.h"
+#include "init.hpp"
 
 #include <SDL3/SDL_init.h>
 #include <_stdlib.h>
@@ -6,7 +6,7 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl3.h>
 
-#include "global.h"
+#include "global.hpp"
 
 void init(int window_width, int window_height) {
     if (!SDL_Init(SDL_INIT_VIDEO)) {

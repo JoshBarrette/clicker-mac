@@ -1,4 +1,4 @@
-#include "mouse.h"
+#include "mouse.hpp"
 
 #include <ApplicationServices/ApplicationServices.h>
 
@@ -6,7 +6,7 @@
 #include <iostream>
 #include <thread>
 
-#include "global.h"
+#include "global.hpp"
 
 void left_click() {
     using namespace std;

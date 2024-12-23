@@ -1,9 +1,9 @@
-#include "examples.h"
+#include "examples.hpp"
 
 #include <imgui.h>
 #include <imgui_impl_opengl3_loader.h>
 
-#include "global.h"
+#include "global.hpp"
 
 void example_window() {
     static float f = 0.0f;

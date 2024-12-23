@@ -9,12 +9,12 @@
 #include <iostream>
 #include <thread>
 
-#include "examples.h"
-#include "global.h"
-#include "init.h"
-#include "mouse.h"
-#include "structs.h"
-#include "window_input.h"
+#include "examples.hpp"
+#include "global.hpp"
+#include "init.hpp"
+#include "mouse.hpp"
+#include "structs.hpp"
+#include "window_input.hpp"
 
 int main() {
     init(WINDOW_WIDTH, WINDOW_HEIGHT);

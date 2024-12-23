@@ -1,10 +1,10 @@
-#include "window_input.h"
+#include "window_input.hpp"
 
 #include <SDL3/SDL_events.h>
 #include <imgui_impl_sdl3.h>
 
-#include "global.h"
-#include "init.h"
+#include "global.hpp"
+#include "init.hpp"
 
 void handle_input() {
     SDL_Event event;

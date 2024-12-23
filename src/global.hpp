@@ -23,7 +23,7 @@ struct AppContext {
 
     bool& done = dummy1;
     bool& should_click = dummy2;
-    int click_delay_ms = 50;
+    int click_delay_ms = 20;
 
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
 };

@@ -1,4 +1,4 @@
 #pragma once
-#include "init.h"
+#include "init.hpp"
 
 void handle_input();
