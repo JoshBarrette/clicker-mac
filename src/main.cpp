@@ -9,10 +9,10 @@
 #include <iostream>
 #include <thread>
 
+#include "apple_hardware.hpp"
 #include "examples.hpp"
 #include "global.hpp"
 #include "init.hpp"
-#include "mouse.hpp"
 #include "structs.hpp"
 #include "ui_windows.hpp"
 #include "window_input.hpp"
@@ -20,29 +20,44 @@
 int main() {
     init();
 
-    start_click_reading();
-    std::thread click_thread(start_click_thread);
+    std::thread click_thread = start_click_thread();
 
     while (!*(context.done)) {
         handle_input();
 
         // Wait if minimized and start the Dear ImGui frame
-        if (SDL_GetWindowFlags(context.window) & SDL_WINDOW_MINIMIZED) {
-            SDL_Delay(10);
-            continue;
+        {
+            if (SDL_GetWindowFlags(context.window) & SDL_WINDOW_MINIMIZED) {
+                SDL_Delay(10);
+                continue;
+            }
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplSDL3_NewFrame();
+            ImGui::NewFrame();
         }
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplSDL3_NewFrame();
-        ImGui::NewFrame();
 
-        main_window();
+        // Draw
+        {
+            main_window();
+        }
+
+        // Minecraft is focused?
+        {
+            if (minecraft_focused()) {
+                std::cout << "true" << std::endl;
+            } else {
+                std::cout << "false" << std::endl;
+            }
+        }
 
         // Rendering
-        ImGui::Render();
-        glViewport(0, 0, (int)context.io->DisplaySize.x, (int)context.io->DisplaySize.y);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        SDL_GL_SwapWindow(context.window);
+        {
+            ImGui::Render();
+            glViewport(0, 0, (int)context.io->DisplaySize.x, (int)context.io->DisplaySize.y);
+            glClear(GL_COLOR_BUFFER_BIT);
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            SDL_GL_SwapWindow(context.window);
+        }
     }
 
     // Cleanup
