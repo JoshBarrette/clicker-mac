@@ -14,9 +14,10 @@
 #include "global.hpp"
 #include "init.hpp"
 #include "queue.hpp"
-#include "structs.hpp"
 #include "ui_windows.hpp"
 #include "window_input.hpp"
+
+void update_tick();
 
 int main() {
     init();
@@ -24,16 +25,7 @@ int main() {
     std::thread click_thread = start_click_thread();
 
     while (!*(context.done)) {
-        if (++context.tick_counter >= 100) {
-            context.tick_counter %= 100;
-            context.cps_queue.push(context.click_count);
-            if (context.click_count == 0) {
-                context.ui_cps_counter = 0;
-            } else {
-                context.ui_cps_counter = context.click_count;
-            }
-            context.click_count = 0;
-        }
+        update_tick();
         handle_input();
 
         // Wait if minimized and start the Dear ImGui frame
@@ -51,14 +43,6 @@ int main() {
         // Draw
         {
             main_window();
-        }
-
-        {
-            // ImGui::Begin("Debug");
-
-            // ImGui::Text("Simple Line Plot:");
-
-            // ImGui::End();
         }
 
         // Rendering
@@ -83,4 +67,17 @@ int main() {
     SDL_GL_DestroyContext(context.gl_context);
     SDL_DestroyWindow(context.window);
     SDL_Quit();
+}
+
+void update_tick() {
+    if (++context.tick_counter >= 100) {
+        context.tick_counter %= 100;
+        context.cps_queue.push(context.click_count);
+        if (context.click_count == 0) {
+            context.ui_cps_counter = 0;
+        } else {
+            context.ui_cps_counter = context.click_count;
+        }
+        context.click_count = 0;
+    }
 }
