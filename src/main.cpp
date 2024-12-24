@@ -13,6 +13,7 @@
 #include "examples.hpp"
 #include "global.hpp"
 #include "init.hpp"
+#include "queue.hpp"
 #include "structs.hpp"
 #include "ui_windows.hpp"
 #include "window_input.hpp"
@@ -23,6 +24,16 @@ int main() {
     std::thread click_thread = start_click_thread();
 
     while (!*(context.done)) {
+        if (++context.tick_counter >= 100) {
+            context.tick_counter %= 100;
+            context.cps_queue.push(context.click_count);
+            if (context.click_count == 0) {
+                context.ui_cps_counter = 0;
+            } else {
+                context.ui_cps_counter = context.click_count;
+            }
+            context.click_count = 0;
+        }
         handle_input();
 
         // Wait if minimized and start the Dear ImGui frame
@@ -34,6 +45,7 @@ int main() {
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplSDL3_NewFrame();
             ImGui::NewFrame();
+            ImGui::PushFont(fonts.default_font);
         }
 
         // Draw
@@ -41,17 +53,17 @@ int main() {
             main_window();
         }
 
-        // Minecraft is focused?
         {
-            if (minecraft_focused()) {
-                std::cout << "true" << std::endl;
-            } else {
-                std::cout << "false" << std::endl;
-            }
+            // ImGui::Begin("Debug");
+
+            // ImGui::Text("Simple Line Plot:");
+
+            // ImGui::End();
         }
 
         // Rendering
         {
+            ImGui::PopFont();
             ImGui::Render();
             glViewport(0, 0, (int)context.io->DisplaySize.x, (int)context.io->DisplaySize.y);
             glClear(GL_COLOR_BUFFER_BIT);

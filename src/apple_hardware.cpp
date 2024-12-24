@@ -11,8 +11,6 @@
 void left_click() {
     using namespace std;
 
-    cout << "Clicking..." << endl;
-
     CGEventRef ourEvent = CGEventCreate(nullptr);
     CGPoint point = CGEventGetLocation(ourEvent);
     CFRelease(ourEvent);
@@ -83,9 +81,17 @@ std::thread start_click_thread() {
     start_click_reading();
     return std::thread([]() {
         while (!*(context.done)) {
+#ifdef DEBUG_CLICK
             if (*(context.should_click) && *(context.click_checked)) {
                 left_click();
+                context.click_count++;
             }
+#else
+            if (*(context.should_click) && *(context.click_checked) && minecraft_focused()) {
+                left_click();
+                context.click_count++;
+            }
+#endif
         }
     });
 }

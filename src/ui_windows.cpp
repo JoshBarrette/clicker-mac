@@ -5,6 +5,7 @@
 #include <string>
 
 #include "global.hpp"
+#include "queue.hpp"
 
 void main_window() {
     ImGui::SetNextWindowPos({0, 0});
@@ -27,12 +28,24 @@ void main_window() {
     ImGui::PopFont();
     ImGui::PushFont(fonts.default_font);
 
-    ImGui::Checkbox("Click", context.click_checked);
+    ImGui::Text("CPS: %d", context.ui_cps_counter);
 
+    ImGui::Checkbox("Click", context.click_checked);
     if (*(context.click_checked)) {
         ImGui::SameLine();
         ImGui::Text(": enabled");
     }
+
+    float values[QUEUE_SIZE];
+    context.cps_queue.fill_array(values);
+    ImGui::PlotLines("##CPS",
+                     &values[0],
+                     QUEUE_SIZE,
+                     0,
+                     nullptr,
+                     FLT_MAX,
+                     FLT_MAX,
+                     {250, 50});
 
     ImGui::PopFont();
     ImGui::End();

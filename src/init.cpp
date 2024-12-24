@@ -9,8 +9,14 @@
 #include "global.hpp"
 
 void init_fonts();
+void init_window();
 
 void init() {
+    init_window();
+    init_fonts();
+}
+
+void init_window() {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         printf("Couldn't initialize SDL: %s\n", SDL_GetError());
         exit(1);
@@ -76,8 +82,6 @@ void init() {
     // Setup Platform/Renderer backends
     ImGui_ImplSDL3_InitForOpenGL(context.window, context.gl_context);
     ImGui_ImplOpenGL3_Init(glsl_version);
-
-    init_fonts();
 }
 
 void init_fonts() {
